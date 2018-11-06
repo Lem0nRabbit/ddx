@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddx.dao.DdxAttrValueMapper">
+	<resultMap id="BaseResultMap"
+		type="com.ddx.pojo.DdxAttrValue">
+		<result column="sku_id" property="skuId" jdbcType="INTEGER" />
+		<result column="attr_id" property="attrId" jdbcType="INTEGER" />
+		<result column="att_val" property="attVal" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		sku_id, attr_id, att_val
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.ddx.pojo.DdxAttrValueExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from ddx_attr_value
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<delete id="deleteByExample"
+		parameterType="com.ddx.pojo.DdxAttrValueExample">
+		delete from ddx_attr_value
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.ddx.pojo.DdxAttrValue">
+		insert into ddx_attr_value (sku_id, attr_id, att_val
+		)
+		values (#{skuId,jdbcType=INTEGER}, #{attrId,jdbcType=INTEGER},
+		#{attVal,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.ddx.pojo.DdxAttrValue">
+		insert into ddx_attr_value
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="skuId != null">
+				sku_id,
+			</if>
+			<if test="attrId != null">
+				attr_id,
+			</if>
+			<if test="attVal != null">
+				att_val,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="skuId != null">
+				#{skuId,jdbcType=INTEGER},
+			</if>
+			<if test="attrId != null">
+				#{attrId,jdbcType=INTEGER},
+			</if>
+			<if test="attVal != null">
+				#{attVal,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.ddx.pojo.DdxAttrValueExample"
+		resultType="java.lang.Integer">
+		select count(*) from ddx_attr_value
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update ddx_attr_value
+		<set>
+			<if test="record.skuId != null">
+				sku_id = #{record.skuId,jdbcType=INTEGER},
+			</if>
+			<if test="record.attrId != null">
+				attr_id = #{record.attrId,jdbcType=INTEGER},
+			</if>
+			<if test="record.attVal != null">
+				att_val = #{record.attVal,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update ddx_attr_value
+		set sku_id = #{record.skuId,jdbcType=INTEGER},
+		attr_id = #{record.attrId,jdbcType=INTEGER},
+		att_val = #{record.attVal,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+</mapper>

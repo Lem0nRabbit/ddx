@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddx.dao.DdxPriceRangeMapper">
+	<resultMap id="BaseResultMap"
+		type="com.ddx.pojo.DdxPriceRange">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sku_id" property="skuId" jdbcType="INTEGER" />
+		<result column="amount_min" property="amountMin"
+			jdbcType="INTEGER" />
+		<result column="amount_max" property="amountMax"
+			jdbcType="INTEGER" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, sku_id, amount_min, amount_max, price
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.ddx.pojo.DdxPriceRangeExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from ddx_price_range
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ddx_price_range
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from ddx_price_range
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.ddx.pojo.DdxPriceRangeExample">
+		delete from ddx_price_range
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.ddx.pojo.DdxPriceRange">
+		insert into ddx_price_range (id, sku_id, amount_min,
+		amount_max, price)
+		values (#{id,jdbcType=INTEGER}, #{skuId,jdbcType=INTEGER},
+		#{amountMin,jdbcType=INTEGER},
+		#{amountMax,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.ddx.pojo.DdxPriceRange">
+		insert into ddx_price_range
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="skuId != null">
+				sku_id,
+			</if>
+			<if test="amountMin != null">
+				amount_min,
+			</if>
+			<if test="amountMax != null">
+				amount_max,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="skuId != null">
+				#{skuId,jdbcType=INTEGER},
+			</if>
+			<if test="amountMin != null">
+				#{amountMin,jdbcType=INTEGER},
+			</if>
+			<if test="amountMax != null">
+				#{amountMax,jdbcType=INTEGER},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.ddx.pojo.DdxPriceRangeExample"
+		resultType="java.lang.Integer">
+		select count(*) from ddx_price_range
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update ddx_price_range
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=INTEGER},
+			</if>
+			<if test="record.skuId != null">
+				sku_id = #{record.skuId,jdbcType=INTEGER},
+			</if>
+			<if test="record.amountMin != null">
+				amount_min = #{record.amountMin,jdbcType=INTEGER},
+			</if>
+			<if test="record.amountMax != null">
+				amount_max = #{record.amountMax,jdbcType=INTEGER},
+			</if>
+			<if test="record.price != null">
+				price = #{record.price,jdbcType=DECIMAL},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update ddx_price_range
+		set id = #{record.id,jdbcType=INTEGER},
+		sku_id = #{record.skuId,jdbcType=INTEGER},
+		amount_min = #{record.amountMin,jdbcType=INTEGER},
+		amount_max = #{record.amountMax,jdbcType=INTEGER},
+		price = #{record.price,jdbcType=DECIMAL}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.ddx.pojo.DdxPriceRange">
+		update ddx_price_range
+		<set>
+			<if test="skuId != null">
+				sku_id = #{skuId,jdbcType=INTEGER},
+			</if>
+			<if test="amountMin != null">
+				amount_min = #{amountMin,jdbcType=INTEGER},
+			</if>
+			<if test="amountMax != null">
+				amount_max = #{amountMax,jdbcType=INTEGER},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.ddx.pojo.DdxPriceRange">
+		update ddx_price_range
+		set sku_id = #{skuId,jdbcType=INTEGER},
+		amount_min = #{amountMin,jdbcType=INTEGER},
+		amount_max = #{amountMax,jdbcType=INTEGER},
+		price = #{price,jdbcType=DECIMAL}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
